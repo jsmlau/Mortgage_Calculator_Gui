@@ -7,12 +7,9 @@ Copyright © 2019 Jas Lau. All rights reserved.
 """
 import tkinter as tk
 import tkinter.messagebox as tkmb
-from tkinter import font
-import sys
 from enum import Enum
 import locale
 import math
-import operator as op
 
 
 # ================================== Main =================================
@@ -24,6 +21,7 @@ def main():
     demo_cls_ref = MortgageGui(root_win)
     demo_cls_ref.get_root().title("Calculator GUI")
     demo_cls_ref.get_root().mainloop()
+
 
 # ================================= End Main ===============================
 
@@ -58,26 +56,25 @@ class MortgageData:
 
     # initializer ("constructor") method -------------------------------
     def __init__(self, principal=None, rate=None, years=None, payment=None):
-
         # repair mutable defaults
-        if (principal == None):
+        if principal is None:
             principal = self.default_principal
-        if (rate == None):
+        if rate is None:
             rate = self.default_rate
-        if (years == None):
+        if years is None:
             years = self.default_years
-        if (payment == None):
+        if payment is None:
             payment = self.default_payment
 
         # instance attributes
-        if (not self.set_principal(principal)):
+        if not self.set_principal(principal):
             self.principal = self.default_principal
 
-        if (not self.set_rate(rate)):
+        if not self.set_rate(rate):
             self.rate = self.default_rate
-        if (not self.set_years(years)):
+        if not self.set_years(years):
             self.years = self.default_years
-        if (not self.set_payment(payment)):
+        if not self.set_payment(payment):
             self.payment = self.default_payment
 
     # mutators -----------------------------------------------
@@ -318,9 +315,6 @@ class MortgageCalc:
         # convert rate to decimal and months
         monthly_rate = mtg_annual_rate / (100. * 12.)
 
-        # use formula to get result
-        temp = mtg_payment / (mtg_payment - (mtg_principal * monthly_rate))
-
         # use formula to get result (if unreasonable answer, exception)
         temp = mtg_payment / (mtg_payment - (mtg_principal * monthly_rate))
         try:
@@ -363,7 +357,7 @@ class MortgageCalc:
 
         # check for  pmt too small (0% rate won't work) or
         # too large (first monthly payment >= principal)
-        if (m * n < p):
+        if m * n < p:
             return False
 
         # loop until error is < EPSILON or fail after 100
@@ -483,7 +477,7 @@ class MortgageGui:
             "Helvetica Neue", 11), padx=15, pady=15, bg=self.WRK_CLR)
 
         self.lab_num_years = tk.Label(self.work_frame, text="Loan Term (Years)", font=(
-            "Helvetica Neue", 11),  padx=15, pady=15, bg=self.WRK_CLR)
+            "Helvetica Neue", 11), padx=15, pady=15, bg=self.WRK_CLR)
 
         self.lab_num_payment = tk.Label(self.work_frame, text="Monthly Payment ($)", font=(
             "Helvetica Neue", 11), padx=15, pady=15, bg=self.WRK_CLR)
@@ -737,8 +731,8 @@ class MortgageGui:
             unk_val_int = self.state_cur_unk_int.get()
             unk_val_txt = self.unk_text[unk_val_int]
             unk_val_header_str = " Enter your three loan requirements\n " \
-                + self.unk_text[
-                    unk_val_int].title() + " will be computed for them"
+                                 + self.unk_text[
+                                     unk_val_int].title() + " will be computed for them"
 
             # load state text with new values based on radio buttons
             self.state_cur_instr_txt.set(unk_val_header_str)  # header text
@@ -821,8 +815,8 @@ class MortgageGui:
         but_cancel.pack(side=tk.LEFT)
         but_about.pack(side=tk.RIGHT)
 
-# ============================End MortgageGui Class ========================
 
+# ============================End MortgageGui Class ========================
 
 # =============================== main program =============================
 if __name__ == "__main__":
