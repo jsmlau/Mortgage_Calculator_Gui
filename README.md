@@ -1,6 +1,13 @@
 ## Welcome 👋
 > Mortgage Calculator GUI
 
+## Prerequisite
+You may need to install **tkinter**</br>
+
+```sh
+sudo apt-get install python3-tk
+```
+
 ## Usage
 
 ```sh
